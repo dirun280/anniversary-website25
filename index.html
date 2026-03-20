@@ -2,79 +2,159 @@
 <html lang="en">
 <head>
 <meta name="robots" content="noindex, nofollow">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CUSTOMIZE: Browser tab title -->
-    <title>Our 5th Anniversary ❤️</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our 5th Anniversary ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffd6e0, #fff0f5);
+    color: #4a2c2a;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+.container {
+    padding: 40px 20px;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 42px;
+}
+
+#countdown {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+button {
+    background: #ff8fab;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ff5d8f;
+}
+
+.hidden {
+    display: none;
+}
+
+/* opening screen */
+#opening {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
+}
+
+#opening button {
+    margin-top: 20px;
+}
+
+/* gallery */
+.gallery img {
+    width: 200px;
+    border-radius: 15px;
+    margin: 10px;
+}
+</style>
 </head>
+
 <body>
-<div id='countdown' style='text-align:center;font-size:24px;margin-top:20px;'></div>
-    <!-- Floating Background Elements -->
-    <div class="floating-elements">
-        <!-- Hearts and bears will be added here by JavaScript -->
+
+<!-- OPENING -->
+<div id="opening">
+    <h2>I made this just for you</h2>
+    <button onclick="startExperience()">Open ❤️</button>
+</div>
+
+<div class="container hidden" id="mainContent">
+
+    <h1>Happy 5th Anniversary ❤️</h1>
+
+    <div id="countdown"></div>
+
+    <!-- MUSIC -->
+    <button onclick="toggleMusic()" id="musicBtn">🎵 Play Music</button>
+    <audio id="music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- MEMORY -->
+    <h2>Our Memories</h2>
+    <div class="gallery">
+        <img src="images/photo1.jpg">
+        <img src="images/photo2.jpg">
+        <img src="images/photo3.jpg">
     </div>
 
-    <!-- Main Content Container -->
-    <div class="container">
-        <h1 id="valentineTitle"></h1>
-        
-        <!-- Music Player -->
-        <div id="musicControls" class="music-controls">
-            <button id="musicToggle" class="music-btn">🎵 Play Music</button>
-            <audio id="bgMusic" loop>
-                <source id="musicSource" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
-        </div>
+    <!-- MESSAGE -->
+    <h2>For You</h2>
+    <p>
+        Thank you for being with me through everything.  
+        These 5 years mean more than words can say.
+    </p>
 
-        <!-- First Question -->
-        <div class="question-section" id="question1">
-            <h2 id="question1Text"></h2>
-            <button class="cute-btn" onclick="moveButton(this)" id="yesBtn1"></button>
-            <button class="cute-btn" onclick="moveButton(this)" id="noBtn1"></button>
-            <!-- CUSTOMIZE: Secret answer text -->
-            <div class="secret-answer">
-                <button class="cute-btn special" onclick="showNextQuestion(2)" id="secretAnswerBtn"></button>
-            </div>
-        </div>
+</div>
 
-        <!-- Second Question (Love Meter) -->
-        <div class="question-section hidden" id="question2">
-            <h2 id="question2Text"></h2>
-            <!-- Love meter settings: min="0" max="10000" -->
-            <div class="love-meter">
-                <input type="range" min="0" max="10000" value="100" class="slider" id="loveMeter">
-                <p>
-                    <span class="love-value-container"><span id="startText"></span> (<span id="loveValue">100</span>%)</span>
-                    <span id="extraLove" class="hidden"></span>
-                </p>
-            </div>
-            <button class="cute-btn" onclick="showNextQuestion(3)" id="nextBtn"></button>
-        </div>
+<script>
+function startExperience() {
+    document.getElementById("opening").style.display = "none";
+    document.getElementById("mainContent").classList.remove("hidden");
+}
 
-        <!-- Final Question -->
-        <div class="question-section hidden" id="question3">
-            <h2 id="question3Text"></h2>
-            <button class="cute-btn final-yes" onclick="celebrate()" id="yesBtn3"></button>
-            <button class="cute-btn" onclick="moveButton(this)" id="noBtn3"></button>
-        </div>
+/* MUSIC */
+const music = document.getElementById("music");
+const btn = document.getElementById("musicBtn");
 
-        <!-- CUSTOMIZE: Celebration message -->
-        <div class="celebration hidden" id="celebration">
-            <h2 id="celebrationTitle"></h2>
-            <p class="celebration-text" id="celebrationMessage"></p>
-            <p class="celebration-text" id="celebrationEmojis"></p>
-        </div>
-    </div>
+function toggleMusic() {
+    if (music.paused) {
+        music.play();
+        btn.innerText = "⏸ Pause Music";
+    } else {
+        music.pause();
+        btn.innerText = "🎵 Play Music";
+    }
+}
 
-    <!-- Scripts -->
-    <script src="config.js"></script>
-    <script src="theme.js"></script>
-    <script src="script.js"></script>
-<script src='countdown.js'></script>
+/* COUNTDOWN */
+const targetDate = new Date("March 25, 2026 00:00:00").getTime();
+
+setInterval(() => {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    const d = Math.floor(distance / (1000*60*60*24));
+    const h = Math.floor((distance / (1000*60*60)) % 24);
+    const m = Math.floor((distance / (1000*60)) % 60);
+    const s = Math.floor((distance / 1000) % 60);
+
+    document.getElementById("countdown").innerHTML =
+        d + "d " + h + "h " + m + "m " + s + "s";
+
+    if (distance < 0) {
+        document.getElementById("countdown").innerHTML =
+            "Happy 5th Anniversary ❤️";
+    }
+}, 1000);
+</script>
+
 </body>
-</html> 
+</html>
